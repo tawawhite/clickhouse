@@ -741,6 +741,15 @@ class ClickHouse {
 					
 					reqParams['formData'] = formData;
 				}
+
+				reqParams['qs'] = {}
+				for (const prop in data) {
+						if (prop !== 'external' && Object.prototype.hasOwnProperty.call(data, prop)) {
+						reqParams['qs'][`param_${prop}`] = data[prop]
+					}
+				}
+
+
 			} else if (query.match(/^insert/i)) {
 				reqParams['url']  = me.url + '?query=' + encodeURIComponent(sql + ' FORMAT TabSeparated') + '&' + querystring.stringify(configQS);
 				
